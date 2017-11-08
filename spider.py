@@ -43,7 +43,7 @@ class Spider:
 class Downloader:
 	def __init__(self):
 		self.path =  imgDir + kwd
-
+OOOOOO
 
 
 if __name__ == "__main__":
