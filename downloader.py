@@ -11,6 +11,7 @@ import threading
 from myQueue import myQueue
 import time
 import requests
+import sys
 
 imgPath = os.path.expanduser('~')+"/Pictures/"
 ##class Downloader:
@@ -20,19 +21,22 @@ imgPath = os.path.expanduser('~')+"/Pictures/"
 		
 		
 def downImg(url):
-        ll = url.split("\\")
-        url =  "".join(ll)
+        url = url.replace("\\","") 
 	t = threading.current_thread()
 	imgname = os.path.split(url)[1]
         try:
-            data = requests.get(url).content
-        except:
-            print "exception"
-        else:    
-	    print t.getName()+" downloading "+url
-            with open(imgname,"wb") as pic:
-                pic.write(data)
-            		
+            	req = requests.get(url)
+		headers = req.headers
+		type = headers["Content-Type"]
+		length = int(headers["Content-Length"])
+		if str(type) == "image/jpeg" : 
+	  		print t.getName()+" downloading "+url
+        		with open(imgname,"wb") as pic:
+                		pic.write(req.content)
+
+        except Exception as e:
+		print url
+            	print e
 
 if __name__ == "__main__":
 	keyWord = raw_input("请输入百度图片搜索关键字：")
@@ -45,10 +49,10 @@ if __name__ == "__main__":
 		os.mkdir(imgDir)
 	os.chdir(imgDir)
 	st = time.time()
-	spider = Spider(keyWord,pages)
-	print spider.url
-	imgList = spider.url_text()
-	my_queue = myQueue(imgList,int(threads),downImg)
+	queue = Queue.Queue()
+	spider = Spider(queue,keyWord,pages)
+	spider.url_text()
+	my_queue = myQueue(queue,int(threads),downImg)
 	my_queue.startWork()
 	et = time.time()
 	print et - st

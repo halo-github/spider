@@ -4,10 +4,8 @@ import Queue
 import threading
 
 class myQueue:
-	def __init__(self,list,workers,target):
-		self.queue = Queue.Queue()
-		for i in list:
-			self.queue.put(i)
+	def __init__(self,queue,workers,target):
+		self.queue = queue
 		self.works = []
 		self.target = target
 		for i in range(0,workers):
