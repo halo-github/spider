@@ -3,7 +3,6 @@
 #encoding:utf-8
 
 
-import re
 import os
 from spider import Spider
 import Queue
@@ -13,15 +12,14 @@ import time
 import requests
 
 imgPath = os.path.expanduser('~')+"/Pictures/"
-##class Downloader:
-##	def __init__(self,list,workers):
-##		self.queue = myQueue(list,workers,downImg) 
 	
 		
 		
 def downImg(url):
-        ll = url.split("\\")
-        url =  "".join(ll)
+	url = url.replace("\\","")
+##	print ss
+##        ll = url.split("\\")
+##        url =  "".join(ll)
 	t = threading.current_thread()
 	imgname = os.path.split(url)[1]
         try:
