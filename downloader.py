@@ -17,14 +17,7 @@ imgPath = os.path.expanduser('~')+"/Pictures/"
 		
 		
 def downImg(url):
-<<<<<<< HEAD
         url = url.replace("\\","") 
-=======
-	url = url.replace("\\","")
-##	print ss
-##        ll = url.split("\\")
-##        url =  "".join(ll)
->>>>>>> 5409875acf4f0326db7bd3f76d108fa566a6a4c1
 	t = threading.current_thread()
 	imgname = os.path.split(url)[1]
         try:
